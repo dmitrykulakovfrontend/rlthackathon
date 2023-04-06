@@ -13,8 +13,8 @@ export default function App({ Component, pageProps }: AppProps) {
     <div className={` ${exo2.variable} font-exo2`}>
       <LayoutProvider>
         <Menu />
-        <Header />
         <Wrapper>
+          <Header />
           <Component {...pageProps} />
         </Wrapper>
         <Notifications />

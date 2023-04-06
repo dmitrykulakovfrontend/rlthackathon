@@ -30,7 +30,7 @@ export const LayoutProvider = ({ children }: { children: React.ReactNode }) => {
       isMenuOpen: width > 1024 ? true : false,
       isNotificationsOpen: width > 1350 ? true : false,
     });
-  }, [setLayout]);
+  }, [setLayout, width]);
 
   return (
     <LayoutContext.Provider value={{ layout, setLayout }}>
