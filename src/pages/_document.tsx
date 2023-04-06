@@ -1,13 +1,15 @@
-import { Html, Head, Main, NextScript } from 'next/document'
-
+import LogoIcon from "@/components/Icons/LogoIcon";
+import { Html, Head, Main, NextScript } from "next/document";
 export default function Document() {
   return (
     <Html lang="en">
       <Head />
-      <body>
+      <body className="text-white bg-blackberry">
+        <LogoIcon />
         <Main />
         <NextScript />
       </body>
     </Html>
-  )
+  );
 }
+

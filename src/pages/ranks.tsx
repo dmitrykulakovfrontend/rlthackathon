@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-export default function Home() {
+export default function Ranks() {
   return (
     <>
       <Head>
@@ -9,10 +9,9 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="flex items-center justify-center min-h-screen w-full">
-        Основное
+      <main className="flex items-center justify-center min-h-screen flex-1">
+        Ранги
       </main>
     </>
   );
 }
-
