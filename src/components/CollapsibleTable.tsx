@@ -24,7 +24,7 @@ function CollapsibleTable<
 >({ headers, rows }: Props<T>) {
   headers = headers.filter((header) => header !== "inside");
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={"div"} className="bg-white border rounded-b-lg">
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
