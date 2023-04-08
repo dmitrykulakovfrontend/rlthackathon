@@ -1,6 +1,9 @@
 import useLayout from "@/contexts/useLayout";
 import { Bars3Icon, BellAlertIcon } from "@heroicons/react/24/solid";
+import Image from "next/image";
+import Link from "next/link";
 import React, { Dispatch, MouseEventHandler, SetStateAction } from "react";
+import Search from "@public/images/icons/search.svg";
 
 function Header() {
   const { setLayout, layout } = useLayout();
@@ -19,11 +22,18 @@ function Header() {
 
   return (
     <header
-      className={`p-4 flex justify-between sticky w-full transition-all duration-300 top-0 left-0`}
+      className={`px-16 py-4  shadow-purple flex justify-between items-center bg-white  w-full transition-all duration-300`}
     >
-      <div className="h-[2px] w-full absolute left-0 bottom-0 bg-gradient-to-br from-purple-600 to-blue-500 via-pink-700 bg-opacity-50"></div>
-      <div className="p-2 hover:cursor-pointer">
-        <Bars3Icon width={24} onClick={handleMenuClick} />
+      <Link href="/" className="h-8">
+        <Image src="/images/logo.png" width={192} height={32} alt="logo" />
+      </Link>
+      <div className=" relative bg-[#F6F6F6] rounded-lg min-w-[400px]">
+        <input
+          type="text"
+          placeholder="Поиск (по ИНН, ОГРН  и чему нибудь еще)"
+          className="w-full text-center px-4 py-2 bg-[#F6F6F6]  rounded-lg h-full"
+        />
+        <Search className="absolute right-2 hover:cursor-pointer top-[50%] translate-y-[-50%]" />
       </div>
       <div className="p-2 hover:cursor-pointer">
         <BellAlertIcon width={24} onClick={handleNotificationsClick} />

@@ -9,6 +9,9 @@ module.exports = {
       fontFamily: {
         exo2: ["var(--font-exo2)", "sans-serif"],
       },
+      boxShadow: {
+        purple: "0px 8px 24px rgba(0, 65, 203, 0.1)",
+      },
     },
   },
   plugins: [],

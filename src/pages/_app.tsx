@@ -12,28 +12,12 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <div className={` ${exo2.variable} font-exo2`}>
       <LayoutProvider>
-        <Menu />
-        <Wrapper>
-          <Header />
+        <Header />
+        <div className="flex">
+          <Menu />
           <Component {...pageProps} />
-        </Wrapper>
-        <Notifications />
+        </div>
       </LayoutProvider>
-    </div>
-  );
-}
-
-function Wrapper({ children }: { children: React.ReactNode }) {
-  const { setLayout, layout } = useLayout();
-  const isMenuOpen = layout.isMenuOpen ? "ml-[320px]" : "ml-0";
-  const isNotificationsOpen = layout.isNotificationsOpen
-    ? "mr-[320px]"
-    : "mr-0";
-  return (
-    <div
-      className={`${isMenuOpen}  ${isNotificationsOpen} transition-all duration-300`}
-    >
-      {children}
     </div>
   );
 }
