@@ -1,20 +1,8 @@
+import Button from "@/components/Button";
 import CollapsibleTable from "@/components/CollapsibleTable";
-import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
-import {
-  TableContainer,
-  Paper,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  Box,
-  Collapse,
-  IconButton,
-  Typography,
-} from "@mui/material";
 import Head from "next/head";
-import React from "react";
+import CrossIcon from "@public/images/icons/cross.svg";
+import FilterIcon from "@public/images/icons/filter.svg";
 
 const companies = [
   {
@@ -22,18 +10,21 @@ const companies = [
     status: "Благополучный",
     rating: "5",
     futureRating: "9",
+    inside: <div>Test</div>,
   },
   {
     INN: 12626262,
     status: "Не Благополучный",
     rating: "4",
     futureRating: "7",
+    inside: <div>Test2</div>,
   },
   {
     INN: 12621662,
     status: "Благополучный",
     rating: "3",
     futureRating: "1",
+    inside: <div>Test3</div>,
   },
 ];
 export default function Home() {
@@ -45,14 +36,24 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="w-full mt-8 text-3xl ">
-        <h2>Общий рейтинг</h2>
-        <input type="text" />
+      <main className="w-full p-4 mt-8 text-3xl ">
+        <h2 className="mb-4">Общий рейтинг</h2>
+        <div className="relative flex items-center w-full bg-white border-2 rounded-lg">
+          <CrossIcon className="absolute left-2 hover:cursor-pointer " />
+          <input
+            type="text"
+            placeholder="ИНН"
+            className="flex-1 w-full p-2 pl-8"
+          />
+          <FilterIcon className="absolute right-40 hover:cursor-pointer " />
+          <Button type={"light"} className="absolute px-12 right-2">
+            Найти
+          </Button>
+        </div>
         <div className="p-4 ">
           <CollapsibleTable<typeof companies[0]>
             headers={Object.keys(companies[0])}
             rows={companies}
-            inside={<div>Test</div>}
           />
         </div>
       </main>

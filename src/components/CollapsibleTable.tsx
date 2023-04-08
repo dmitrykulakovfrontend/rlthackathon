@@ -14,17 +14,15 @@ import {
 } from "@mui/material";
 import React from "react";
 
-type Props<T extends Record<string, any>> = {
+type Props<T extends Record<string, any> & { inside: React.ReactNode }> = {
   headers: Array<keyof T extends string ? string : never>;
   rows: T[];
-  inside: React.ReactNode;
 };
 
-function CollapsibleTable<T extends Record<string, any>>({
-  headers,
-  rows,
-  inside,
-}: Props<T>) {
+function CollapsibleTable<
+  T extends Record<string, any> & { inside: React.ReactNode }
+>({ headers, rows }: Props<T>) {
+  headers = headers.filter((header) => header !== "inside");
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
@@ -38,7 +36,7 @@ function CollapsibleTable<T extends Record<string, any>>({
         </TableHead>
         <TableBody>
           {rows.map((row, i) => (
-            <Row<T> key={i} row={row} inside={inside} />
+            <Row<T> key={i} row={row} />
           ))}
         </TableBody>
       </Table>
@@ -46,17 +44,20 @@ function CollapsibleTable<T extends Record<string, any>>({
   );
 }
 
-type RowProps<T extends Record<string, any>> = {
+type RowProps<T extends Record<string, any> & { inside: React.ReactNode }> = {
   row: T;
-  inside: React.ReactNode;
 };
-function Row<T extends Record<string, any>>({ row, inside }: RowProps<T>) {
+function Row<T extends Record<string, any> & { inside: React.ReactNode }>({
+  row,
+}: RowProps<T>) {
   const [open, setOpen] = React.useState(false);
-
+  const values = Object.entries(row)
+    .filter((entry) => entry[0] !== "inside")
+    .map((entry) => entry[1]);
   return (
     <>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-        {Object.values(row).map((rowValue, i) => (
+        {values.map((rowValue, i) => (
           <TableCell key={i}>{rowValue}</TableCell>
         ))}
         <TableCell>
@@ -76,7 +77,7 @@ function Row<T extends Record<string, any>>({ row, inside }: RowProps<T>) {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            {inside}
+            {row.inside}
           </Collapse>
         </TableCell>
       </TableRow>
