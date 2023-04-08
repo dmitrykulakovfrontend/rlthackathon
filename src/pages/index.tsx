@@ -34,7 +34,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="w-full min-h-screen mt-8 text-3xl ">
+      <main className="w-full mt-8 text-3xl ">
         <h2>Общий рейтинг</h2>
       </main>
     </>

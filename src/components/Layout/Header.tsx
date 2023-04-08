@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { Dispatch, MouseEventHandler, SetStateAction } from "react";
 import Search from "@public/images/icons/search.svg";
+import Button from "../Button";
 
 function Header() {
   const { setLayout, layout } = useLayout();
@@ -35,9 +36,7 @@ function Header() {
         />
         <Search className="absolute right-2 hover:cursor-pointer top-[50%] translate-y-[-50%]" />
       </div>
-      <div className="p-2 hover:cursor-pointer">
-        <BellAlertIcon width={24} onClick={handleNotificationsClick} />
-      </div>
+      <Button>Личный Кабинет</Button>
     </header>
   );
 }

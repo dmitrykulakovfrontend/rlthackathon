@@ -5,7 +5,11 @@ type ButtonProps = {
 };
 
 function Button({ children }: ButtonProps) {
-  return <button>{children}</button>;
+  return (
+    <button className="px-4 py-2 text-white bg-blue-600 rounded-lg">
+      {children}
+    </button>
+  );
 }
 
 export default Button;
