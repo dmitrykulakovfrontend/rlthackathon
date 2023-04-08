@@ -2,10 +2,21 @@ import useLayout from "@/contexts/useLayout";
 import { Bars3Icon, BellAlertIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
-import React, { Dispatch, MouseEventHandler, SetStateAction } from "react";
+import React, {
+  Dispatch,
+  MouseEventHandler,
+  SetStateAction,
+  useState,
+} from "react";
 import Search from "@public/images/icons/search.svg";
 import Button from "../Button";
+import Dropdown, { Option } from "../Dropdown";
 
+const options = [
+  { value: "option1", label: "Option 1" },
+  { value: "option2", label: "Option 2" },
+  { value: "option3", label: "Option 3" },
+];
 function Header() {
   const { setLayout, layout } = useLayout();
   function handleMenuClick() {
@@ -21,6 +32,11 @@ function Header() {
     });
   }
 
+  const [selectedOption, setSelectedOption] = useState(options[0]);
+
+  const handleSelect = (option: Option) => {
+    setSelectedOption(option);
+  };
   return (
     <header
       className={`px-16 py-4  shadow-purple flex justify-between items-center bg-white  w-full transition-all duration-300`}
@@ -35,7 +51,12 @@ function Header() {
           className="w-full text-center px-4 py-2 bg-[#F6F6F6]  rounded-lg h-full"
         />
         <Search className="absolute right-2 hover:cursor-pointer top-[50%] translate-y-[-50%]" />
-      </div>
+      </div>{" "}
+      <Dropdown
+        options={options}
+        selectedOption={selectedOption}
+        onSelect={handleSelect}
+      />
       <Button>Личный Кабинет</Button>
     </header>
   );
