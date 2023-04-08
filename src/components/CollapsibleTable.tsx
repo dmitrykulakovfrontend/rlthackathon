@@ -9,11 +9,10 @@ import {
   TableBody,
   IconButton,
   Collapse,
-  Box,
-  Typography,
 } from "@mui/material";
 import React from "react";
 import InfoIcon from "@public/images/icons/info.svg";
+import DotIcon from "@public/images/icons/dot.svg";
 
 type Props<T extends Record<string, any> & { inside: React.ReactNode }> = {
   headers: Array<keyof T extends string ? string : never>;
@@ -30,7 +29,9 @@ function CollapsibleTable<
         <TableHead>
           <TableRow>
             {headers.map((header) => (
-              <TableCell key={header}>{header}</TableCell>
+              <TableCell key={header} align="center">
+                {header}
+              </TableCell>
             ))}
             <TableCell />
           </TableRow>
@@ -55,13 +56,33 @@ function Row<T extends Record<string, any> & { inside: React.ReactNode }>({
   const values = Object.entries(row)
     .filter((entry) => entry[0] !== "inside")
     .map((entry) => entry[1]);
+  const tagClassName = "p-2 flex items-center gap-2 w-fit m-auto rounded-xl";
   return (
     <>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         {values.map((rowValue, i) => (
-          <TableCell key={i}>{rowValue}</TableCell>
+          <TableCell key={i} align="center">
+            <span
+              className={
+                rowValue === "Благополучный"
+                  ? tagClassName + " bg-green-100 text-green-600"
+                  : rowValue === "Неблагополучный"
+                  ? tagClassName + " bg-red-100 text-red-600"
+                  : ""
+              }
+            >
+              {rowValue === "Благополучный" ? (
+                <DotIcon className="text-green-500 fill-current" />
+              ) : rowValue === "Неблагополучный" ? (
+                <DotIcon className="text-red-500 fill-current" />
+              ) : (
+                ""
+              )}
+              {rowValue}
+            </span>
+          </TableCell>
         ))}
-        <TableCell>
+        <TableCell align="right">
           <IconButton
             aria-label="expand row"
             size="small"
