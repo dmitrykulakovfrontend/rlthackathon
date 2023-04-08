@@ -1,34 +1,59 @@
+//@ts-nocheck
 import Button from "@/components/Button";
 import CollapsibleTable from "@/components/CollapsibleTable";
 import Head from "next/head";
 import CrossIcon from "@public/images/icons/cross.svg";
 import FilterIcon from "@public/images/icons/filter.svg";
 import Tags from "@/components/Tags";
+import Chart from "react-google-charts";
+import AreaChart from "@/components/AreaChart";
+import mock from "@/mock.json";
+const data = [
+  ["Месяц", "Деньги", "Траты"],
+  ["Июнь", 100000, 42300],
+  ["Июль", 117120, 121260],
+  ["Август", 66320, 11250],
+  ["Сентябрь", 101230, 54120],
+];
 
+const options = {
+  title: "Эффективность компании",
+  hAxis: { title: "Месяц", titleTextStyle: { color: "#333" } },
+  vAxis: { minValue: 0, title: "Рубли" },
+};
+const inside = (
+  <div className="flex flex-col">
+    <AreaChart data={data} options={options} />
+    <Button href="#" className="self-end mb-4 w-fit">
+      Подробнее
+    </Button>
+  </div>
+);
 const companies = [
   {
     ИНН: 1262662,
     Статус: "Надежный",
     Рейтинг: "5",
     "Будущий рейтинг": "9",
-    inside: <div>Test</div>,
+    inside,
   },
   {
     ИНН: 12626262,
     Статус: "Ненадежный",
     Рейтинг: "4",
     futureRating: "7",
-    inside: <div>Test2</div>,
+    inside,
   },
   {
     ИНН: 12621662,
     Статус: "Надежный",
     Рейтинг: "3",
     "Будущий рейтинг": "1",
-    inside: <div>Test3</div>,
+    inside,
   },
 ];
 export default function Home() {
+  mock.forEach((obj) => (obj.inside = inside));
   return (
     <>
       <Head>
@@ -53,10 +78,7 @@ export default function Home() {
         </div>
         <Tags tagsList={["Площадка: АО «ЕЭТП»", "Секция: 44-ФЗ"]} />
         <div>
-          <CollapsibleTable<typeof companies[0]>
-            headers={Object.keys(companies[0])}
-            rows={companies}
-          />
+          <CollapsibleTable headers={Object.keys(mock[0])} rows={mock} />
         </div>
       </main>
     </>

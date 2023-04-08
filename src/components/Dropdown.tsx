@@ -19,7 +19,7 @@ const Dropdown = ({ options, selectedOption, onSelect }: DropdownProps) => {
   return (
     <div className="relative min-w-[200px]">
       <button
-        className="flex items-center justify-end w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
+        className="flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
         onClick={() => setIsOpen(!isOpen)}
       >
         <span>{selectedOption.label}</span>
@@ -34,9 +34,9 @@ const Dropdown = ({ options, selectedOption, onSelect }: DropdownProps) => {
           {options.map((option) => (
             <button
               key={option.value}
-              className={` w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 ${
+              className={` w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-blue-100 hover:text-gray-900 ${
                 option.value === selectedOption.value
-                  ? "bg-gray-100 text-gray-900"
+                  ? "bg-blue-100 text-gray-900"
                   : ""
               }`}
               onClick={() => handleSelect(option)}

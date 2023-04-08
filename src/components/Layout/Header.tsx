@@ -61,7 +61,9 @@ function Header() {
           selectedOption={selectedOption}
           onSelect={handleSelect}
         />
-        <Button>Личный Кабинет</Button>
+        <Button type="light" className="px-2">
+          Личный Кабинет
+        </Button>
       </div>
     </header>
   );
