@@ -3,6 +3,7 @@ import CollapsibleTable from "@/components/CollapsibleTable";
 import Head from "next/head";
 import CrossIcon from "@public/images/icons/cross.svg";
 import FilterIcon from "@public/images/icons/filter.svg";
+import Tags from "@/components/Tags";
 
 const companies = [
   {
@@ -46,11 +47,11 @@ export default function Home() {
             className="flex-1 w-full p-2 pl-8 rounded-t-lg"
           />
           <FilterIcon className="absolute right-40 hover:cursor-pointer " />
-          <Button type={"light"} className="absolute px-12 right-2">
+          <Button type={"light"} className="absolute px-12 py-2 right-2">
             Найти
           </Button>
         </div>
-        <div></div>
+        <Tags tagsList={["Площадка: АО «ЕЭТП»", "Секция: 44-ФЗ"]} />
         <div>
           <CollapsibleTable<typeof companies[0]>
             headers={Object.keys(companies[0])}

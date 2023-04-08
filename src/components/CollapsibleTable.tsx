@@ -13,6 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import InfoIcon from "@public/images/icons/info.svg";
 
 type Props<T extends Record<string, any> & { inside: React.ReactNode }> = {
   headers: Array<keyof T extends string ? string : never>;
@@ -66,11 +67,7 @@ function Row<T extends Record<string, any> & { inside: React.ReactNode }>({
             size="small"
             onClick={() => setOpen(!open)}
           >
-            {open ? (
-              <ChevronUpIcon width={24} />
-            ) : (
-              <ChevronDownIcon width={24} />
-            )}
+            {<InfoIcon />}
           </IconButton>
         </TableCell>
       </TableRow>
