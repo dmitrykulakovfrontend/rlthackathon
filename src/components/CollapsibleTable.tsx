@@ -29,7 +29,7 @@ function CollapsibleTable<
         <TableHead>
           <TableRow>
             {headers.map((header) => (
-              <TableCell key={header} align="center">
+              <TableCell key={header} align="center" className="text-gray-800">
                 {header}
               </TableCell>
             ))}
@@ -64,16 +64,16 @@ function Row<T extends Record<string, any> & { inside: React.ReactNode }>({
           <TableCell key={i} align="center">
             <span
               className={
-                rowValue === "Благополучный"
+                rowValue === "Надежный"
                   ? tagClassName + " bg-green-100 text-green-600"
-                  : rowValue === "Неблагополучный"
+                  : rowValue === "Ненадежный"
                   ? tagClassName + " bg-red-100 text-red-600"
                   : ""
               }
             >
-              {rowValue === "Благополучный" ? (
+              {rowValue === "Надежный" ? (
                 <DotIcon className="text-green-500 fill-current" />
-              ) : rowValue === "Неблагополучный" ? (
+              ) : rowValue === "Ненадежный" ? (
                 <DotIcon className="text-red-500 fill-current" />
               ) : (
                 ""

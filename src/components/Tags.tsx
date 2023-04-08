@@ -7,7 +7,7 @@ type TagsProps = {
 
 function Tags({ tagsList }: TagsProps) {
   return (
-    <div className="flex items-center gap-4 p-2 bg-white border">
+    <div className="flex items-center gap-4 p-2 pl-6 bg-white border">
       {tagsList.length >= 1 ? (
         <span className="p-1 text-xs rounded-lg h-fit shadow-purple-small hover:cursor-pointer">
           {<CrossIcon />}

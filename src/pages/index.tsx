@@ -8,21 +8,21 @@ import Tags from "@/components/Tags";
 const companies = [
   {
     ИНН: 1262662,
-    Статус: "Благополучный",
+    Статус: "Надежный",
     Рейтинг: "5",
     "Будущий рейтинг": "9",
     inside: <div>Test</div>,
   },
   {
     ИНН: 12626262,
-    Статус: "Неблагополучный",
+    Статус: "Ненадежный",
     Рейтинг: "4",
     futureRating: "7",
     inside: <div>Test2</div>,
   },
   {
     ИНН: 12621662,
-    Статус: "Благополучный",
+    Статус: "Надежный",
     Рейтинг: "3",
     "Будущий рейтинг": "1",
     inside: <div>Test3</div>,
@@ -40,11 +40,11 @@ export default function Home() {
       <main className="w-full p-4 mt-8 text-3xl ">
         <h2 className="mb-4">Общий рейтинг</h2>
         <div className="relative flex items-center w-full bg-white border rounded-t-lg ">
-          <CrossIcon className="absolute left-2 hover:cursor-pointer " />
+          <CrossIcon className="absolute left-6 hover:cursor-pointer " />
           <input
             type="text"
             placeholder="ИНН"
-            className="flex-1 w-full p-2 pl-8 rounded-t-lg"
+            className="flex-1 w-full p-2 pl-12 rounded-t-lg"
           />
           <FilterIcon className="absolute right-40 hover:cursor-pointer " />
           <Button type={"light"} className="absolute px-12 py-2 right-2">
