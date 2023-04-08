@@ -10,6 +10,7 @@ import {
   IconButton,
   Collapse,
   TablePagination,
+  TableFooter,
 } from "@mui/material";
 import React, { useState } from "react";
 import InfoIcon from "@public/images/icons/info.svg";
@@ -76,6 +77,7 @@ function CollapsibleTable({ headers, rows }: Props) {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
+        labelRowsPerPage="Компаний на страницу"
         count={rows.length}
         rowsPerPage={rowsPerPage}
         page={page}
@@ -97,7 +99,7 @@ function Row({ row }: RowProps) {
   const tagClassName = "p-2 flex items-center gap-2 w-fit m-auto rounded-xl";
   return (
     <>
-      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+      <TableRow sx={{ "& > *": { borderBottom: "unset" }, width: "100%" }}>
         {values.map((rowValue, i) => (
           <TableCell key={i} align="center">
             <span
@@ -116,7 +118,7 @@ function Row({ row }: RowProps) {
               ) : (
                 ""
               )}
-              {rowValue.value}
+              {rowValue.value === "" ? "Неизвестно" : rowValue.value}
             </span>
           </TableCell>
         ))}
@@ -131,7 +133,10 @@ function Row({ row }: RowProps) {
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell
+          style={{ paddingBottom: 0, paddingTop: 0 }}
+          colSpan={Object.keys(row).length || 0}
+        >
           <Collapse in={open} timeout="auto" unmountOnExit>
             {row.inside}
           </Collapse>

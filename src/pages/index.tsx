@@ -29,29 +29,6 @@ const inside = (
     </Button>
   </div>
 );
-const companies = [
-  {
-    ИНН: 1262662,
-    Статус: "Надежный",
-    Рейтинг: "5",
-    "Будущий рейтинг": "9",
-    inside,
-  },
-  {
-    ИНН: 12626262,
-    Статус: "Ненадежный",
-    Рейтинг: "4",
-    futureRating: "7",
-    inside,
-  },
-  {
-    ИНН: 12621662,
-    Статус: "Надежный",
-    Рейтинг: "3",
-    "Будущий рейтинг": "1",
-    inside,
-  },
-];
 export default function Home() {
   mock.forEach((obj) => (obj.inside = inside));
   return (
