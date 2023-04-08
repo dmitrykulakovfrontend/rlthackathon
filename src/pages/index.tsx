@@ -1,3 +1,5 @@
+import CollapsibleTable from "@/components/CollapsibleTable";
+import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import {
   TableContainer,
   Paper,
@@ -6,26 +8,35 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  Box,
+  Collapse,
+  IconButton,
+  Typography,
 } from "@mui/material";
 import Head from "next/head";
+import React from "react";
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number
-) {
-  return { name, calories, fat, carbs, protein };
-}
+const companies = [
+  {
+    INN: 1262662,
+    status: "Благополучный",
+    rating: "5",
+    futureRating: "9",
+  },
+  {
+    INN: 12626262,
+    status: "Не Благополучный",
+    rating: "4",
+    futureRating: "7",
+  },
+  {
+    INN: 12621662,
+    status: "Благополучный",
+    rating: "3",
+    futureRating: "1",
+  },
+];
 export default function Home() {
-  const rows = [
-    createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-    createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-    createData("Eclair", 262, 16.0, 24, 6.0),
-    createData("Cupcake", 305, 3.7, 67, 4.3),
-    createData("Gingerbread", 356, 16.0, 49, 3.9),
-  ];
   return (
     <>
       <Head>
@@ -36,6 +47,14 @@ export default function Home() {
       </Head>
       <main className="w-full mt-8 text-3xl ">
         <h2>Общий рейтинг</h2>
+        <input type="text" />
+        <div className="p-4 ">
+          <CollapsibleTable<typeof companies[0]>
+            headers={Object.keys(companies[0])}
+            rows={companies}
+            inside={<div>Test</div>}
+          />
+        </div>
       </main>
     </>
   );

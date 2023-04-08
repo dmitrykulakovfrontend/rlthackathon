@@ -13,9 +13,9 @@ import Button from "../Button";
 import Dropdown, { Option } from "../Dropdown";
 
 const options = [
-  { value: "option1", label: "Option 1" },
-  { value: "option2", label: "Option 2" },
-  { value: "option3", label: "Option 3" },
+  { value: "Заказчик", label: "Заказчик" },
+  { value: "Поставщик", label: "Поставщик" },
+  { value: "Комбинированный", label: "Комбинированный" },
 ];
 function Header() {
   const { setLayout, layout } = useLayout();
@@ -32,7 +32,10 @@ function Header() {
     });
   }
 
-  const [selectedOption, setSelectedOption] = useState(options[0]);
+  const [selectedOption, setSelectedOption] = useState({
+    value: "Роль",
+    label: "Роль",
+  });
 
   const handleSelect = (option: Option) => {
     setSelectedOption(option);
@@ -52,12 +55,14 @@ function Header() {
         />
         <Search className="absolute right-2 hover:cursor-pointer top-[50%] translate-y-[-50%]" />
       </div>{" "}
-      <Dropdown
-        options={options}
-        selectedOption={selectedOption}
-        onSelect={handleSelect}
-      />
-      <Button>Личный Кабинет</Button>
+      <div className="flex gap-4">
+        <Dropdown
+          options={options}
+          selectedOption={selectedOption}
+          onSelect={handleSelect}
+        />
+        <Button>Личный Кабинет</Button>
+      </div>
     </header>
   );
 }
