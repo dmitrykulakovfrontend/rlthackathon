@@ -172,7 +172,6 @@ export default function Home() {
             Найти
           </Button>
         </div>
-        <Tags tagsList={["Площадка: АО «ЕЭТП»", "Секция: 44-ФЗ"]} />
         <div>
           <CollapsibleTable
             headers={tableHeaders}
