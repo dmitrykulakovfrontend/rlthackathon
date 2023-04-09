@@ -22,6 +22,7 @@ export default function Home() {
   // const [companyType, setCompanyType] = useState("Поставщики");
   const [typeActivitySearch, setTypeActivitySearch] = useState("");
   const [currentCompanies, setCurrentCompanies] = useState(companies);
+  const [filteredStatus, setFilteredStatus] = useState(-1);
 
   const { search } = useSearch();
 
@@ -40,6 +41,9 @@ export default function Home() {
   //   // @ts-ignore
   //   setCurrentCompanies(newCompanies);
   // }
+  function handleFilterSwitch(e: ChangeEvent<HTMLInputElement>) {
+    setFilteredStatus(+e.currentTarget.value);
+  }
   return (
     <>
       <Head>
@@ -99,6 +103,41 @@ export default function Home() {
                     Все
                   </label>
                 </div>
+                <h3 className="mt-4 mb-4 text-xl font-bold">
+                  Статус компаний:
+                </h3>
+                <div className="flex flex-col gap-4">
+                  <label className="flex gap-2 text-base hover:cursor-pointer">
+                    <input
+                      type="radio"
+                      name="companyType"
+                      value={-1}
+                      checked={filteredStatus === -1}
+                      onChange={handleFilterSwitch}
+                    />
+                    Любой
+                  </label>
+                  <label className="flex gap-2 text-base hover:cursor-pointer">
+                    <input
+                      type="radio"
+                      name="companyType"
+                      value={1}
+                      checked={filteredStatus === 1}
+                      onChange={handleFilterSwitch}
+                    />
+                    Только надёжные
+                  </label>
+                  <label className="flex gap-2 text-base hover:cursor-pointer">
+                    <input
+                      type="radio"
+                      name="companyType"
+                      value={0}
+                      checked={filteredStatus === 0}
+                      onChange={handleFilterSwitch}
+                    />
+                    Только ненадёжные
+                  </label>
+                </div>
               </div>
             ) : (
               ""
@@ -117,6 +156,7 @@ export default function Home() {
             innerContent={suppliers}
             typeActivitySearch={typeActivitySearch}
             search={search}
+            filteredStatus={filteredStatus}
           />
         </div>
       </main>

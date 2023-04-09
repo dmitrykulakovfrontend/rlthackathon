@@ -42,6 +42,7 @@ type Props = {
   innerContent: CompanyInnerContent[];
   search: string;
   typeActivitySearch: string;
+  filteredStatus: number;
 };
 
 function CollapsibleTable({
@@ -50,6 +51,7 @@ function CollapsibleTable({
   search,
   typeActivitySearch,
   innerContent,
+  filteredStatus,
 }: Props) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -59,11 +61,14 @@ function CollapsibleTable({
 
   const formatted = (s: string) => s.toLowerCase().trim();
 
-  const filteredRows = rows.filter(
-    (company) =>
-      formatted(`${company.tru_okpd2_name}`).includes(
-        formatted(typeActivitySearch)
-      ) && formatted(`${company.supplier_inn}`).includes(formatted(search))
+  const filteredRows = rows.filter((company) =>
+    formatted(`${company.tru_okpd2_name}`).includes(
+      formatted(typeActivitySearch)
+    ) &&
+    formatted(`${company.supplier_inn}`).includes(formatted(search)) &&
+    filteredStatus === -1
+      ? true
+      : filteredStatus === company.reit_classif
   );
 
   const currentPageSlice = filteredRows.length < rowsPerPage ? 0 : page;
