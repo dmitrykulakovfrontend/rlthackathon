@@ -31,21 +31,16 @@ export default function Home() {
     const customersAndSuppliers = [...customers, ...suppliers].sort(
       () => Math.random() - 0.5
     );
-    console.log(customersAndSuppliers.length);
     let newCompanies =
-      companyType === "Поставщики"
+      e.currentTarget.value === "Поставщики"
         ? suppliers
-        : companyType === "Заказчики"
+        : e.currentTarget.value === "Заказчики"
         ? customers
         : customersAndSuppliers;
-    console.log(newCompanies);
-    newCompanies = newCompanies.filter((company) =>
-      String(company.inn).includes(search)
-    );
-    console.log(newCompanies);
     // @ts-ignore
     setCurrentCompanies(newCompanies);
   }
+  console.log(currentCompanies);
   return (
     <>
       <Head>
@@ -78,8 +73,8 @@ export default function Home() {
                     <input
                       type="radio"
                       name="companyType"
-                      defaultChecked={true}
                       value="Поставщики"
+                      checked={companyType === "Поставщики"}
                       onChange={handleFilterSwitch}
                     />
                     Поставщики
@@ -89,6 +84,7 @@ export default function Home() {
                       type="radio"
                       name="companyType"
                       value="Заказчики"
+                      checked={companyType === "Заказчики"}
                       onChange={handleFilterSwitch}
                     />
                     Заказчики
@@ -98,6 +94,7 @@ export default function Home() {
                       type="radio"
                       name="companyType"
                       value="Все"
+                      checked={companyType === "Все"}
                       onChange={handleFilterSwitch}
                     />
                     Все
