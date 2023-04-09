@@ -23,6 +23,7 @@ export default function Home() {
   const [typeActivitySearch, setTypeActivitySearch] = useState("");
   const [currentCompanies, setCurrentCompanies] = useState(companies);
   const [filteredStatus, setFilteredStatus] = useState(-1);
+  const [ratingSort, setRatingSort] = useState("DESC");
 
   const { search } = useSearch();
 
@@ -71,7 +72,7 @@ export default function Home() {
             {isFilterOpen ? (
               <div className="absolute z-10 p-4 bg-white border rounded-lg -right-full w-max top-full">
                 <h3 className="mb-4 text-xl font-bold">Тип компаний:</h3>
-                <div className="flex flex-col gap-4">
+                <div className="flex gap-4">
                   <label className="flex gap-2 text-base hover:cursor-pointer">
                     <input
                       type="radio"
@@ -106,7 +107,7 @@ export default function Home() {
                 <h3 className="mt-4 mb-4 text-xl font-bold">
                   Статус компаний:
                 </h3>
-                <div className="flex flex-col gap-4">
+                <div className="flex gap-4">
                   <label className="flex gap-2 text-base hover:cursor-pointer">
                     <input
                       type="radio"
@@ -138,6 +139,31 @@ export default function Home() {
                     Только ненадёжные
                   </label>
                 </div>
+                <h3 className="mt-4 mb-4 text-xl font-bold">
+                  Сортировка рейтинга:
+                </h3>
+                <div className="flex gap-4">
+                  <label className="flex gap-2 text-base hover:cursor-pointer">
+                    <input
+                      type="radio"
+                      name="companyType"
+                      value="DESC"
+                      checked={ratingSort === "DESC"}
+                      onChange={(e) => setRatingSort("DESC")}
+                    />
+                    По убыванию
+                  </label>
+                  <label className="flex gap-2 text-base hover:cursor-pointer">
+                    <input
+                      type="radio"
+                      name="companyType"
+                      value="ASC"
+                      checked={ratingSort === "ASC"}
+                      onChange={(e) => setRatingSort("ASC")}
+                    />
+                    По возрастанию
+                  </label>
+                </div>
               </div>
             ) : (
               ""
@@ -151,7 +177,9 @@ export default function Home() {
         <div>
           <CollapsibleTable
             headers={tableHeaders}
-            rows={currentCompanies}
+            rows={currentCompanies.sort((a, b) =>
+              ratingSort === "DESC" ? b.reit - a.reit : a.reit - b.reit
+            )}
             // @ts-ignore
             innerContent={suppliers}
             typeActivitySearch={typeActivitySearch}
