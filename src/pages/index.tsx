@@ -15,6 +15,9 @@ import {
   useEffect,
   useState,
 } from "react";
+const customersAndSuppliers = [...customers, ...suppliers].sort(
+  () => Math.random() - 0.5
+);
 export default function Home() {
   const tableHeaders = ["ИНН"];
   const [isFilterOpen, setFilterOpen] = useState(false);
@@ -28,9 +31,6 @@ export default function Home() {
 
   function handleFilterSwitch(e: ChangeEvent<HTMLInputElement>) {
     setCompanyType(e.currentTarget.value);
-    const customersAndSuppliers = [...customers, ...suppliers].sort(
-      () => Math.random() - 0.5
-    );
     let newCompanies =
       e.currentTarget.value === "Поставщики"
         ? suppliers
@@ -40,7 +40,6 @@ export default function Home() {
     // @ts-ignore
     setCurrentCompanies(newCompanies);
   }
-  console.log(currentCompanies);
   return (
     <>
       <Head>
