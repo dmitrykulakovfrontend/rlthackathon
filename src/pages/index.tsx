@@ -63,7 +63,7 @@ export default function Home() {
           />
           <input
             type="text"
-            placeholder="ИНН"
+            placeholder="Область деятельности"
             value={search}
             onChange={handleSearch}
             className="flex-1 w-full p-2 pl-12 rounded-t-lg"

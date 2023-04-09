@@ -44,7 +44,7 @@ function CollapsibleTable({ headers, rows, search }: Props) {
   };
 
   const filteredRows = rows.filter((company) =>
-    String(company.inn).includes(search)
+    String(company.license_activity_type).includes(search)
   );
 
   const currentPageSlice = filteredRows.length < rowsPerPage ? 0 : page;
