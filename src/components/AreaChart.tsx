@@ -8,15 +8,13 @@ type AreaChartProps = {
 
 function AreaChart({ options, data }: AreaChartProps) {
   return (
-    <div className="flex items-center justify-center w-full">
-      <Chart
-        chartType="AreaChart"
-        width="90%"
-        height="400px"
-        data={data}
-        options={options}
-      />
-    </div>
+    <Chart
+      chartType="AreaChart"
+      width="900px"
+      height="400px"
+      data={data}
+      options={options}
+    />
   );
 }
 

@@ -15,23 +15,19 @@ import {
 import React, { useState } from "react";
 import InfoIcon from "@public/images/icons/info.svg";
 import DotIcon from "@public/images/icons/dot.svg";
+import CompanyDropdown from "./CompanyDropdown";
 
-type Value<T> = {
-  name: string;
-  value: T;
-};
-
-type Company = {
-  id: Value<number>;
-  inn: Value<number>;
-  procedure_qty: Value<number>;
-  win_qty: Value<number>;
-  registration_date: Value<string>;
-  license_activity_type_x: Value<string>;
-  license_activity_type_y: Value<string>;
-  avg_staff_qty: Value<string>;
-  Статус: "Ненадежный" | "Надежный";
-  inside: React.ReactNode;
+export type Company = {
+  id: number;
+  inn: number;
+  license_activity_type: string;
+  msp_type: string;
+  msp_category: string;
+  registration_date: string;
+  life_time: number;
+  avg_staff_qty: number | "";
+  procedure_qty: number;
+  "win_part, %": number;
 };
 
 type Props = {
@@ -70,7 +66,7 @@ function CollapsibleTable({ headers, rows }: Props) {
           {rows
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((row, i) => (
-              <Row key={i} row={row} />
+              <Row key={i} row={row} headers={headers} />
             ))}
         </TableBody>
       </Table>
@@ -90,36 +86,38 @@ function CollapsibleTable({ headers, rows }: Props) {
 
 type RowProps = {
   row: Company;
+  headers: string[];
 };
 function Row({ row }: RowProps) {
   const [open, setOpen] = React.useState(false);
-  const values = Object.entries(row)
-    .filter((entry) => entry[0] !== "inside")
-    .map((entry) => entry[1]) as (Value<string> | Value<number>)[];
   const tagClassName = "p-2 flex items-center gap-2 w-fit m-auto rounded-xl";
+  const values = Object.entries(row)
+    .filter(([key, value]) => key === "inn")
+    .map((value) => value[1]);
   return (
     <>
       <TableRow sx={{ "& > *": { borderBottom: "unset" }, width: "100%" }}>
         {values.map((rowValue, i) => (
           <TableCell key={i} align="center">
-            <span
+            {/* <span
               className={
-                rowValue.value === "Надежный"
+                rowValue === "Надежный"
                   ? tagClassName + " bg-green-100 text-green-600"
-                  : rowValue.value === "Ненадежный"
+                  : rowValue === "Ненадежный"
                   ? tagClassName + " bg-red-100 text-red-600"
                   : ""
               }
             >
-              {rowValue.value === "Надежный" ? (
+              {rowValue === "Надежный" ? (
                 <DotIcon className="text-green-500 fill-current" />
-              ) : rowValue.value === "Ненадежный" ? (
+              ) : rowValue === "Ненадежный" ? (
                 <DotIcon className="text-red-500 fill-current" />
               ) : (
                 ""
-              )}
-              {rowValue.value === "" ? "Неизвестно" : rowValue.value}
-            </span>
+              )} 
+              {rowValue}
+            </span> */}
+            {rowValue}
           </TableCell>
         ))}
         <TableCell align="right">
@@ -138,7 +136,7 @@ function Row({ row }: RowProps) {
           colSpan={Object.keys(row).length || 0}
         >
           <Collapse in={open} timeout="auto" unmountOnExit>
-            {row.inside}
+            <CompanyDropdown company={row} />
           </Collapse>
         </TableCell>
       </TableRow>
