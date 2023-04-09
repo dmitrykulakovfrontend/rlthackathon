@@ -34,17 +34,27 @@ type Props = {
   headers: string[];
   rows: Company[];
   search: string;
+  typeActivitySearch: string;
 };
 
-function CollapsibleTable({ headers, rows, search }: Props) {
+function CollapsibleTable({
+  headers,
+  rows,
+  search,
+  typeActivitySearch,
+}: Props) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
-  const filteredRows = rows.filter((company) =>
-    String(company.license_activity_type).includes(search)
+  const filteredRows = rows.filter(
+    (company) =>
+      String(company.license_activity_type)
+        .toLowerCase()
+        .includes(typeActivitySearch.toLowerCase()) &&
+      String(company.inn).toLowerCase().includes(search.toLowerCase())
   );
 
   const currentPageSlice = filteredRows.length < rowsPerPage ? 0 : page;

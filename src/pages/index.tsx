@@ -15,6 +15,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import useSearch from "@/contexts/useSearch";
 const customersAndSuppliers = [...customers, ...suppliers].sort(
   () => Math.random() - 0.5
 );
@@ -22,11 +23,13 @@ export default function Home() {
   const tableHeaders = ["ИНН"];
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [companyType, setCompanyType] = useState("Поставщики");
-  const [search, setSearch] = useState("");
+  const [typeActivitySearch, setTypeActivitySearch] = useState("");
   const [currentCompanies, setCurrentCompanies] = useState(suppliers);
 
+  const { search } = useSearch();
+
   function handleSearch(e: ChangeEvent<HTMLInputElement>) {
-    setSearch(e.currentTarget.value);
+    setTypeActivitySearch(e.currentTarget.value);
   }
 
   function handleFilterSwitch(e: ChangeEvent<HTMLInputElement>) {
@@ -53,12 +56,12 @@ export default function Home() {
         <div className="relative flex items-center w-full bg-white border rounded-t-lg ">
           <CrossIcon
             className="absolute left-6 hover:cursor-pointer "
-            onClick={() => setSearch("")}
+            onClick={() => setTypeActivitySearch("")}
           />
           <input
             type="text"
             placeholder="Область деятельности"
-            value={search}
+            value={typeActivitySearch}
             onChange={handleSearch}
             className="flex-1 w-full p-2 pl-12 rounded-t-lg"
           />
@@ -114,6 +117,7 @@ export default function Home() {
             headers={tableHeaders}
             // @ts-ignore
             rows={currentCompanies}
+            typeActivitySearch={typeActivitySearch}
             search={search}
           />
         </div>

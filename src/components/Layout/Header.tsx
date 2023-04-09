@@ -11,6 +11,7 @@ import React, {
 import Search from "@public/images/icons/search.svg";
 import Button from "../Button";
 import Dropdown, { Option } from "../Dropdown";
+import useSearch from "@/contexts/useSearch";
 
 const options = [
   { value: "Заказчик", label: "Заказчик" },
@@ -18,7 +19,8 @@ const options = [
   { value: "Комбинированный", label: "Комбинированный" },
 ];
 function Header() {
-  const { setLayout, layout } = useLayout();
+  const { search, setSearch } = useSearch();
+  const { layout, setLayout } = useLayout();
   function handleMenuClick() {
     setLayout({
       ...layout,
@@ -50,7 +52,9 @@ function Header() {
       <div className=" relative bg-[#F6F6F6] rounded-lg min-w-[400px]">
         <input
           type="text"
-          placeholder="Поиск (по ИНН, ОГРН  и чему нибудь еще)"
+          value={search}
+          onChange={(e) => setSearch(e.currentTarget.value)}
+          placeholder="Поиск (по ИНН)"
           className="w-full text-center px-4 py-2 bg-[#F6F6F6]  rounded-lg h-full"
         />
         <Search className="absolute right-2 hover:cursor-pointer top-[50%] translate-y-[-50%]" />
