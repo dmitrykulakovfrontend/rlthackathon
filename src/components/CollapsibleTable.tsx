@@ -33,15 +33,21 @@ export type Company = {
 type Props = {
   headers: string[];
   rows: Company[];
+  search: string;
 };
 
-function CollapsibleTable({ headers, rows }: Props) {
-  headers = headers.filter((header) => header !== "inside");
+function CollapsibleTable({ headers, rows, search }: Props) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
+
+  const filteredRows = rows.filter((company) =>
+    String(company.inn).includes(search)
+  );
+
+  const currentPageSlice = filteredRows.length < rowsPerPage ? 0 : page;
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -63,8 +69,11 @@ function CollapsibleTable({ headers, rows }: Props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+          {filteredRows
+            .slice(
+              currentPageSlice * rowsPerPage,
+              page * rowsPerPage + rowsPerPage
+            )
             .map((row) => (
               <Row key={row.inn} row={row} headers={headers} />
             ))}
@@ -74,9 +83,9 @@ function CollapsibleTable({ headers, rows }: Props) {
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
         labelRowsPerPage="Компаний на страницу"
-        count={rows.length}
+        count={filteredRows.length}
         rowsPerPage={rowsPerPage}
-        page={page}
+        page={currentPageSlice}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />

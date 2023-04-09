@@ -8,17 +8,44 @@ import Chart from "react-google-charts";
 import AreaChart from "@/components/AreaChart";
 import suppliers from "@/suppliersMock.json";
 import customers from "@/customersMock.json";
-import { ChangeEvent, ChangeEventHandler, MouseEvent, useState } from "react";
+import {
+  ChangeEvent,
+  ChangeEventHandler,
+  MouseEvent,
+  useEffect,
+  useState,
+} from "react";
 export default function Home() {
   const tableHeaders = ["ИНН"];
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [companyType, setCompanyType] = useState("Поставщики");
-  const handleFilterSwitch = (e: ChangeEvent<HTMLInputElement>) =>
+  const [search, setSearch] = useState("");
+  const [currentCompanies, setCurrentCompanies] = useState(suppliers);
+
+  function handleSearch(e: ChangeEvent<HTMLInputElement>) {
+    setSearch(e.currentTarget.value);
+  }
+
+  function handleFilterSwitch(e: ChangeEvent<HTMLInputElement>) {
     setCompanyType(e.currentTarget.value);
-  const customersAndSuppliers = [...customers, ...suppliers].sort(
-    () => Math.random() - 0.5
-  );
-  console.log(companyType);
+    const customersAndSuppliers = [...customers, ...suppliers].sort(
+      () => Math.random() - 0.5
+    );
+    console.log(customersAndSuppliers.length);
+    let newCompanies =
+      companyType === "Поставщики"
+        ? suppliers
+        : companyType === "Заказчики"
+        ? customers
+        : customersAndSuppliers;
+    console.log(newCompanies);
+    newCompanies = newCompanies.filter((company) =>
+      String(company.inn).includes(search)
+    );
+    console.log(newCompanies);
+    // @ts-ignore
+    setCurrentCompanies(newCompanies);
+  }
   return (
     <>
       <Head>
@@ -30,10 +57,15 @@ export default function Home() {
       <main className="w-full p-4 mt-8 text-3xl ">
         <h2 className="mb-4">Общий рейтинг</h2>
         <div className="relative flex items-center w-full bg-white border rounded-t-lg ">
-          <CrossIcon className="absolute left-6 hover:cursor-pointer " />
+          <CrossIcon
+            className="absolute left-6 hover:cursor-pointer "
+            onClick={() => setSearch("")}
+          />
           <input
             type="text"
             placeholder="ИНН"
+            value={search}
+            onChange={handleSearch}
             className="flex-1 w-full p-2 pl-12 rounded-t-lg"
           />
           <div className="absolute right-40 hover:cursor-pointer ">
@@ -85,13 +117,8 @@ export default function Home() {
           <CollapsibleTable
             headers={tableHeaders}
             // @ts-ignore
-            rows={
-              companyType === "Поставщики"
-                ? suppliers
-                : companyType === "Заказчики"
-                ? customers
-                : customersAndSuppliers
-            }
+            rows={currentCompanies}
+            search={search}
           />
         </div>
       </main>
