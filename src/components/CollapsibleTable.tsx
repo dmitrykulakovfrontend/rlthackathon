@@ -57,12 +57,13 @@ function CollapsibleTable({
     setPage(newPage);
   };
 
+  const formatted = (s: string) => s.toLowerCase().trim();
+
   const filteredRows = rows.filter(
     (company) =>
-      String(company.tru_okpd2_name)
-        .toLowerCase()
-        .includes(typeActivitySearch.toLowerCase()) &&
-      String(company.supplier_inn).toLowerCase().includes(search.toLowerCase())
+      formatted(`${company.tru_okpd2_name}`).includes(
+        formatted(typeActivitySearch)
+      ) && formatted(`${company.supplier_inn}`).includes(formatted(search))
   );
 
   const currentPageSlice = filteredRows.length < rowsPerPage ? 0 : page;
@@ -158,6 +159,8 @@ function Row({ row, innerContent }: RowProps) {
                 ? "Надежный"
                 : rowValue === 0
                 ? "Ненадежный"
+                : typeof rowValue === "number" && rowValue <= 20
+                ? rowValue.toFixed(2)
                 : rowValue}
             </span>
           </TableCell>
