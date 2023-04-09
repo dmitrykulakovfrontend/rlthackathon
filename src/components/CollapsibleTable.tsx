@@ -16,6 +16,7 @@ import React, { useState } from "react";
 import InfoIcon from "@public/images/icons/info.svg";
 import DotIcon from "@public/images/icons/dot.svg";
 import CompanyDropdown from "./CompanyDropdown";
+import uuid from "@/utils/uuid";
 
 export type CompanyInnerContent = {
   id: number;
@@ -99,7 +100,7 @@ function CollapsibleTable({
             )
             .map((row, i) => (
               <Row
-                key={row.supplier_inn}
+                key={uuid()}
                 row={row}
                 innerContent={innerContent[i]}
                 headers={headers}
@@ -142,7 +143,7 @@ function Row({ row, innerContent }: RowProps) {
     <>
       <TableRow sx={{ "& > *": { borderBottom: "unset" }, width: "100%" }}>
         {values.map((rowValue) => (
-          <TableCell key={rowValue} align="center">
+          <TableCell key={uuid()} align="center">
             <span
               className={
                 rowValue === 1
