@@ -8,23 +8,20 @@ import Chart from "react-google-charts";
 import AreaChart from "@/components/AreaChart";
 import suppliers from "@/suppliersMock.json";
 import customers from "@/customersMock.json";
-import {
-  ChangeEvent,
-  ChangeEventHandler,
-  MouseEvent,
-  useEffect,
-  useState,
-} from "react";
+import companies from "@/companiesMock.json";
+import { ChangeEvent, useState } from "react";
 import useSearch from "@/contexts/useSearch";
-const customersAndSuppliers = [...customers, ...suppliers].sort(
-  () => Math.random() - 0.5
-);
 export default function Home() {
-  const tableHeaders = ["ИНН"];
+  const tableHeaders = [
+    "Наименование продукции",
+    "ИНН поставщика",
+    "Рейтинг",
+    "Статус",
+  ];
   const [isFilterOpen, setFilterOpen] = useState(false);
-  const [companyType, setCompanyType] = useState("Поставщики");
+  // const [companyType, setCompanyType] = useState("Поставщики");
   const [typeActivitySearch, setTypeActivitySearch] = useState("");
-  const [currentCompanies, setCurrentCompanies] = useState(suppliers);
+  const [currentCompanies, setCurrentCompanies] = useState(companies);
 
   const { search } = useSearch();
 
@@ -32,17 +29,17 @@ export default function Home() {
     setTypeActivitySearch(e.currentTarget.value);
   }
 
-  function handleFilterSwitch(e: ChangeEvent<HTMLInputElement>) {
-    setCompanyType(e.currentTarget.value);
-    let newCompanies =
-      e.currentTarget.value === "Поставщики"
-        ? suppliers
-        : e.currentTarget.value === "Заказчики"
-        ? customers
-        : customersAndSuppliers;
-    // @ts-ignore
-    setCurrentCompanies(newCompanies);
-  }
+  // function handleFilterSwitch(e: ChangeEvent<HTMLInputElement>) {
+  //   setCompanyType(e.currentTarget.value);
+  //   let newCompanies =
+  //     e.currentTarget.value === "Поставщики"
+  //       ? suppliers
+  //       : e.currentTarget.value === "Заказчики"
+  //       ? customers
+  //       : customersAndSuppliers;
+  //   // @ts-ignore
+  //   setCurrentCompanies(newCompanies);
+  // }
   return (
     <>
       <Head>
@@ -76,8 +73,8 @@ export default function Home() {
                       type="radio"
                       name="companyType"
                       value="Поставщики"
-                      checked={companyType === "Поставщики"}
-                      onChange={handleFilterSwitch}
+                      // checked={companyType === "Поставщики"}
+                      // onChange={handleFilterSwitch}
                     />
                     Поставщики
                   </label>
@@ -86,8 +83,8 @@ export default function Home() {
                       type="radio"
                       name="companyType"
                       value="Заказчики"
-                      checked={companyType === "Заказчики"}
-                      onChange={handleFilterSwitch}
+                      // checked={companyType === "Заказчики"}
+                      // onChange={handleFilterSwitch}
                     />
                     Заказчики
                   </label>
@@ -96,8 +93,8 @@ export default function Home() {
                       type="radio"
                       name="companyType"
                       value="Все"
-                      checked={companyType === "Все"}
-                      onChange={handleFilterSwitch}
+                      // checked={companyType === "Все"}
+                      // onChange={handleFilterSwitch}
                     />
                     Все
                   </label>
@@ -115,8 +112,9 @@ export default function Home() {
         <div>
           <CollapsibleTable
             headers={tableHeaders}
-            // @ts-ignore
             rows={currentCompanies}
+            // @ts-ignore
+            innerContent={suppliers}
             typeActivitySearch={typeActivitySearch}
             search={search}
           />

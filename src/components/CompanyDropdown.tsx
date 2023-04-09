@@ -1,10 +1,10 @@
 import React from "react";
 import Button from "./Button";
 import AreaChart from "./AreaChart";
-import { Company } from "./CollapsibleTable";
+import { Company, CompanyInnerContent } from "./CollapsibleTable";
 
 type Props = {
-  company: Company;
+  company: CompanyInnerContent;
 };
 
 const data = [

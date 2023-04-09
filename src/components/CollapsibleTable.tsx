@@ -17,7 +17,7 @@ import InfoIcon from "@public/images/icons/info.svg";
 import DotIcon from "@public/images/icons/dot.svg";
 import CompanyDropdown from "./CompanyDropdown";
 
-export type Company = {
+export type CompanyInnerContent = {
   id: number;
   inn: number;
   license_activity_type: string;
@@ -29,10 +29,17 @@ export type Company = {
   procedure_qty: number;
   "win_part, %": number;
 };
+export type Company = {
+  tru_okpd2_name: string;
+  supplier_inn: number;
+  reit: number;
+  reit_classif: number;
+};
 
 type Props = {
   headers: string[];
   rows: Company[];
+  innerContent: CompanyInnerContent[];
   search: string;
   typeActivitySearch: string;
 };
@@ -42,6 +49,7 @@ function CollapsibleTable({
   rows,
   search,
   typeActivitySearch,
+  innerContent,
 }: Props) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -51,10 +59,10 @@ function CollapsibleTable({
 
   const filteredRows = rows.filter(
     (company) =>
-      String(company.license_activity_type)
+      String(company.tru_okpd2_name)
         .toLowerCase()
         .includes(typeActivitySearch.toLowerCase()) &&
-      String(company.inn).toLowerCase().includes(search.toLowerCase())
+      String(company.supplier_inn).toLowerCase().includes(search.toLowerCase())
   );
 
   const currentPageSlice = filteredRows.length < rowsPerPage ? 0 : page;
@@ -84,8 +92,13 @@ function CollapsibleTable({
               currentPageSlice * rowsPerPage,
               page * rowsPerPage + rowsPerPage
             )
-            .map((row) => (
-              <Row key={row.inn} row={row} headers={headers} />
+            .map((row, i) => (
+              <Row
+                key={row.supplier_inn}
+                row={row}
+                innerContent={innerContent[i]}
+                headers={headers}
+              />
             ))}
         </TableBody>
       </Table>
@@ -106,37 +119,47 @@ function CollapsibleTable({
 type RowProps = {
   row: Company;
   headers: string[];
+  innerContent: CompanyInnerContent;
 };
-function Row({ row }: RowProps) {
+function Row({ row, innerContent }: RowProps) {
   const [open, setOpen] = React.useState(false);
   const tagClassName = "p-2 flex items-center gap-2 w-fit m-auto rounded-xl";
+  const allowedKeys = [
+    "tru_okpd2_name",
+    "supplier_inn",
+    "reit",
+    "reit_classif",
+  ];
   const values = Object.entries(row)
-    .filter(([key, value]) => key === "inn")
+    .filter(([key, value]) => allowedKeys.includes(key))
     .map((value) => value[1]);
   return (
     <>
       <TableRow sx={{ "& > *": { borderBottom: "unset" }, width: "100%" }}>
         {values.map((rowValue) => (
           <TableCell key={rowValue} align="center">
-            {/* <span
+            <span
               className={
-                rowValue === "Надежный"
+                rowValue === 1
                   ? tagClassName + " bg-green-100 text-green-600"
-                  : rowValue === "Ненадежный"
+                  : rowValue === 0
                   ? tagClassName + " bg-red-100 text-red-600"
                   : ""
               }
             >
-              {rowValue === "Надежный" ? (
+              {rowValue === 1 ? (
                 <DotIcon className="text-green-500 fill-current" />
-              ) : rowValue === "Ненадежный" ? (
+              ) : rowValue === 0 ? (
                 <DotIcon className="text-red-500 fill-current" />
               ) : (
                 ""
-              )} 
-              {rowValue}
-            </span> */}
-            {rowValue}
+              )}
+              {rowValue === 1
+                ? "Надежный"
+                : rowValue === 0
+                ? "Ненадежный"
+                : rowValue}
+            </span>
           </TableCell>
         ))}
         <TableCell align="right">
@@ -155,7 +178,7 @@ function Row({ row }: RowProps) {
           colSpan={Object.keys(row).length || 0}
         >
           <Collapse in={open} timeout="auto">
-            <CompanyDropdown company={row} />
+            <CompanyDropdown company={innerContent} />
           </Collapse>
         </TableCell>
       </TableRow>
