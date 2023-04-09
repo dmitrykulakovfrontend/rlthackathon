@@ -65,8 +65,8 @@ function CollapsibleTable({ headers, rows }: Props) {
         <TableBody>
           {rows
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((row, i) => (
-              <Row key={i} row={row} headers={headers} />
+            .map((row) => (
+              <Row key={row.inn} row={row} headers={headers} />
             ))}
         </TableBody>
       </Table>
@@ -97,8 +97,8 @@ function Row({ row }: RowProps) {
   return (
     <>
       <TableRow sx={{ "& > *": { borderBottom: "unset" }, width: "100%" }}>
-        {values.map((rowValue, i) => (
-          <TableCell key={i} align="center">
+        {values.map((rowValue) => (
+          <TableCell key={rowValue} align="center">
             {/* <span
               className={
                 rowValue === "Надежный"
@@ -135,7 +135,7 @@ function Row({ row }: RowProps) {
           style={{ paddingBottom: 0, paddingTop: 0 }}
           colSpan={Object.keys(row).length || 0}
         >
-          <Collapse in={open} timeout="auto" unmountOnExit>
+          <Collapse in={open} timeout="auto">
             <CompanyDropdown company={row} />
           </Collapse>
         </TableCell>

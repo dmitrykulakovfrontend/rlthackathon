@@ -8,8 +8,17 @@ import Chart from "react-google-charts";
 import AreaChart from "@/components/AreaChart";
 import suppliers from "@/suppliersMock.json";
 import customers from "@/customersMock.json";
+import { ChangeEvent, ChangeEventHandler, MouseEvent, useState } from "react";
 export default function Home() {
   const tableHeaders = ["ИНН"];
+  const [isFilterOpen, setFilterOpen] = useState(false);
+  const [companyType, setCompanyType] = useState("Поставщики");
+  const handleFilterSwitch = (e: ChangeEvent<HTMLInputElement>) =>
+    setCompanyType(e.currentTarget.value);
+  const customersAndSuppliers = [...customers, ...suppliers].sort(
+    () => Math.random() - 0.5
+  );
+  console.log(companyType);
   return (
     <>
       <Head>
@@ -27,16 +36,63 @@ export default function Home() {
             placeholder="ИНН"
             className="flex-1 w-full p-2 pl-12 rounded-t-lg"
           />
-          <FilterIcon className="absolute right-40 hover:cursor-pointer " />
+          <div className="absolute right-40 hover:cursor-pointer ">
+            <FilterIcon onClick={() => setFilterOpen(!isFilterOpen)} />
+            {isFilterOpen ? (
+              <div className="absolute z-10 p-4 bg-white border rounded-lg -right-full w-max top-full">
+                <h3 className="mb-4 text-xl font-bold">Тип компаний:</h3>
+                <div className="flex flex-col gap-4">
+                  <label className="flex gap-2 text-base hover:cursor-pointer">
+                    <input
+                      type="radio"
+                      name="companyType"
+                      defaultChecked={true}
+                      value="Поставщики"
+                      onChange={handleFilterSwitch}
+                    />
+                    Поставщики
+                  </label>
+                  <label className="flex gap-2 text-base hover:cursor-pointer">
+                    <input
+                      type="radio"
+                      name="companyType"
+                      value="Заказчики"
+                      onChange={handleFilterSwitch}
+                    />
+                    Заказчики
+                  </label>
+                  <label className="flex gap-2 text-base hover:cursor-pointer">
+                    <input
+                      type="radio"
+                      name="companyType"
+                      value="Все"
+                      onChange={handleFilterSwitch}
+                    />
+                    Все
+                  </label>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
           <Button type={"light"} className="absolute px-12 py-2 right-2">
             Найти
           </Button>
         </div>
         <Tags tagsList={["Площадка: АО «ЕЭТП»", "Секция: 44-ФЗ"]} />
         <div>
-          {/* 
-          // @ts-ignore */}
-          <CollapsibleTable headers={tableHeaders} rows={suppliers} />
+          <CollapsibleTable
+            headers={tableHeaders}
+            // @ts-ignore
+            rows={
+              companyType === "Поставщики"
+                ? suppliers
+                : companyType === "Заказчики"
+                ? customers
+                : customersAndSuppliers
+            }
+          />
         </div>
       </main>
     </>
