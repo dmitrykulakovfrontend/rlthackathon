@@ -30,7 +30,6 @@ export default function Home() {
   function handleSearch(e: ChangeEvent<HTMLInputElement>) {
     setTypeActivitySearch(e.currentTarget.value);
   }
-
   // function handleFilterSwitch(e: ChangeEvent<HTMLInputElement>) {
   //   setCompanyType(e.currentTarget.value);
   //   let newCompanies =
@@ -111,7 +110,7 @@ export default function Home() {
                   <label className="flex gap-2 text-base hover:cursor-pointer">
                     <input
                       type="radio"
-                      name="companyType"
+                      name="filteredStatus"
                       value={-1}
                       checked={filteredStatus === -1}
                       onChange={handleFilterSwitch}
@@ -121,7 +120,7 @@ export default function Home() {
                   <label className="flex gap-2 text-base hover:cursor-pointer">
                     <input
                       type="radio"
-                      name="companyType"
+                      name="filteredStatus"
                       value={1}
                       checked={filteredStatus === 1}
                       onChange={handleFilterSwitch}
@@ -131,7 +130,7 @@ export default function Home() {
                   <label className="flex gap-2 text-base hover:cursor-pointer">
                     <input
                       type="radio"
-                      name="companyType"
+                      name="filteredStatus"
                       value={0}
                       checked={filteredStatus === 0}
                       onChange={handleFilterSwitch}
@@ -146,7 +145,7 @@ export default function Home() {
                   <label className="flex gap-2 text-base hover:cursor-pointer">
                     <input
                       type="radio"
-                      name="companyType"
+                      name="ratingSort"
                       value="DESC"
                       checked={ratingSort === "DESC"}
                       onChange={(e) => setRatingSort("DESC")}
@@ -156,7 +155,7 @@ export default function Home() {
                   <label className="flex gap-2 text-base hover:cursor-pointer">
                     <input
                       type="radio"
-                      name="companyType"
+                      name="ratingSort"
                       value="ASC"
                       checked={ratingSort === "ASC"}
                       onChange={(e) => setRatingSort("ASC")}
