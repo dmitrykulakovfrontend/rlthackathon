@@ -72,7 +72,9 @@ function CompanyDropdown({ company }: Props) {
             ""
           )}
           {company["win_part, %"] ? (
-            <li>Процент побед в процедурах: {company["win_part, %"]}</li>
+            <li>
+              Процент побед в процедурах: {company["win_part, %"].toFixed(2)}%
+            </li>
           ) : (
             ""
           )}
